@@ -1,5 +1,6 @@
 package me.saket.baseandroidproject
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Bundle
@@ -20,7 +21,8 @@ class MainActivity : AppCompatActivity() {
   private val keyboardView by bindView<View>(R.id.keyboard)
 
   private val onDestroy = PublishSubject.create<Any>()
-  private val smoothly = true
+  private val contentAnimDuration = 300L
+  private val contentAnimDelay = 400L
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -32,9 +34,9 @@ class MainActivity : AppCompatActivity() {
         .scan(false) { keyboardVisible, _ -> keyboardVisible.not() }
         .subscribe { show ->
           if (show) {
-            showKeyboard()
+            showKeyboard(smoothly = false)
           } else {
-            hideKeyboard()
+            hideKeyboard(smoothly = false)
           }
         }
   }
@@ -44,10 +46,16 @@ class MainActivity : AppCompatActivity() {
     super.onDestroy()
   }
 
-  private fun showKeyboard() {
+
+  private fun showKeyboard(smoothly: Boolean = true) {
     val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
-    params.bottomMargin = 150.dp
-    
+    if (smoothly) {
+      animateContentHeight(params, 150.dp)
+    } else {
+      params.bottomMargin = 150.dp
+      contentView.layoutParams = params
+    }
+
     keyboardView.visibility = View.VISIBLE
     keyboardView.alpha = 0F
     keyboardView.onNextMeasure {
@@ -61,9 +69,15 @@ class MainActivity : AppCompatActivity() {
         .start()
   }
 
-  private fun hideKeyboard() {
+  private fun hideKeyboard(smoothly: Boolean = true) {
     val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
-    params.bottomMargin = 24.dp
+
+    if (smoothly) {
+      animateContentHeight(params, 24.dp)
+    } else {
+      params.bottomMargin = 24.dp
+      contentView.layoutParams = params
+    }
 
     keyboardView.animate()
         .alpha(0F)
@@ -71,6 +85,19 @@ class MainActivity : AppCompatActivity() {
         .setInterpolator(FastOutSlowInInterpolator())
         .withEndAction { keyboardView.visibility = View.GONE }
         .start()
+  }
+
+  private fun animateContentHeight(params: ViewGroup.MarginLayoutParams, targetMargin: Int) {
+    val paramsAnimator = ObjectAnimator.ofInt(params.bottomMargin, targetMargin).apply {
+      duration = contentAnimDuration
+      interpolator = FastOutSlowInInterpolator()
+      startDelay = contentAnimDelay
+    }
+    paramsAnimator.addUpdateListener {
+      params.bottomMargin = it.animatedValue as Int
+      contentView.layoutParams = params
+    }
+    paramsAnimator.start()
   }
 }
 
