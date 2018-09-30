@@ -23,9 +23,9 @@
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_above="@id/contentview"
-    android:layout_alignEnd="@+id/contentview"
-    android:layout_alignStart="@+id/contentview"
+    android:layout_above="@id/contentview_container"
+    android:layout_alignEnd="@+id/contentview_container"
+    android:layout_alignStart="@+id/contentview_container"
     android:layout_marginBottom="-48dp"
     android:layout_marginStart="36dp"
     android:elevation="2dp"
@@ -63,9 +63,9 @@
   </LinearLayout>
 
   <RelativeLayout
-    android:id="@+id/contentview"
+    android:id="@+id/contentview_container"
     android:layout_width="250dp"
-    android:layout_height="394dp"
+    android:layout_height="396dp"
     android:layout_alignStart="@+id/decorview"
     android:layout_alignTop="@+id/decorview"
     android:layout_marginTop="-2dp"
@@ -73,12 +73,12 @@
     android:rotationY="20">
 
     <View
+      android:id="@+id/contentview"
       android:layout_width="200dp"
       android:layout_height="match_parent"
+      android:layout_marginBottom="128dp"
       android:layout_marginTop="16dp"
       android:background="@drawable/shadows"
-      android:elevation="4dp"
-      android:layout_above="@+id/keyboard"
       android:translationX="20dp" />
 
     <LinearLayout
@@ -86,11 +86,13 @@
       android:layout_width="200dp"
       android:layout_height="124dp"
       android:layout_alignParentBottom="true"
-      android:layout_marginBottom="20dp"
+      android:layout_marginBottom="24dp"
       android:background="@drawable/shadows"
-      android:elevation="8dp"
+      android:elevation="2dp"
       android:orientation="vertical"
-      android:translationX="20dp">
+      android:translationX="32dp"
+      android:translationY="-4dp"
+      android:visibility="gone">
 
       <TextView
         android:layout_width="match_parent"
