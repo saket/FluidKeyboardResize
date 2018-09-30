@@ -1,12 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="me.saket.baseandroidproject.MainActivity">
+  tools:context="me.saket.baseandroidproject.MainActivity"
+  tools:ignore="HardcodedText">
 
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Hello World!" />
-</FrameLayout>
+    android:layout_above="@id/decorview"
+    android:layout_alignEnd="@+id/decorview"
+    android:layout_alignStart="@+id/decorview"
+    android:layout_marginBottom="8dp"
+    android:fontFamily="sans-serif-mono"
+    android:letterSpacing="0.03"
+    android:rotation="20"
+    android:rotationX="-20"
+    android:text="DecorView"
+    android:textSize="12sp" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@id/contentview"
+    android:layout_alignEnd="@+id/contentview"
+    android:layout_alignStart="@+id/contentview"
+    android:layout_marginBottom="-48dp"
+    android:layout_marginStart="36dp"
+    android:elevation="2dp"
+    android:fontFamily="sans-serif-mono"
+    android:letterSpacing="0.03"
+    android:rotation="16"
+    android:rotationX="-20"
+    android:text="android.R.id.content"
+    android:textSize="12sp" />
+
+  <LinearLayout
+    android:id="@+id/decorview"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="@drawable/shadows"
+    android:clipChildren="true"
+    android:orientation="vertical"
+    android:rotationY="20">
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="16dp"
+      android:background="@color/gray_300" />
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="350dp"
+      android:background="#f9f9f9" />
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="32dp"
+      android:background="@color/gray_900" />
+  </LinearLayout>
+
+  <FrameLayout
+    android:id="@+id/contentview"
+    android:layout_width="220dp"
+    android:layout_height="384dp"
+    android:layout_alignStart="@+id/decorview"
+    android:layout_alignTop="@+id/decorview"
+    android:layout_marginTop="-2dp"
+    android:orientation="vertical"
+    android:rotationY="20">
+
+    <View
+      android:layout_width="200dp"
+      android:layout_height="234dp"
+      android:layout_marginTop="16dp"
+      android:background="@drawable/shadows"
+      android:elevation="4dp"
+      android:translationX="20dp" />
+
+    <LinearLayout
+      android:id="@+id/keyboard"
+      android:layout_width="200dp"
+      android:layout_height="124dp"
+      android:layout_gravity="bottom"
+      android:layout_marginBottom="10dp"
+      android:background="@drawable/shadows"
+      android:elevation="8dp"
+      android:orientation="vertical"
+      android:translationX="20dp">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FAFAFA"
+        android:gravity="center"
+        android:letterSpacing="0.7"
+        android:text="QWERTYUIOP" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_300" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FAFAFA"
+        android:gravity="center"
+        android:letterSpacing="0.7"
+        android:text="ASDFGHJKL" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_300" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FAFAFA"
+        android:gravity="center"
+        android:letterSpacing="0.7"
+        android:text="ZXCVBNM" />
+    </LinearLayout>
+  </FrameLayout>
+</RelativeLayout>
