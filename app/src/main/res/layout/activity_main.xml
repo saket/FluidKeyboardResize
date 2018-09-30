@@ -62,10 +62,10 @@
       android:background="@color/gray_900" />
   </LinearLayout>
 
-  <FrameLayout
+  <RelativeLayout
     android:id="@+id/contentview"
-    android:layout_width="220dp"
-    android:layout_height="384dp"
+    android:layout_width="250dp"
+    android:layout_height="394dp"
     android:layout_alignStart="@+id/decorview"
     android:layout_alignTop="@+id/decorview"
     android:layout_marginTop="-2dp"
@@ -74,18 +74,19 @@
 
     <View
       android:layout_width="200dp"
-      android:layout_height="234dp"
+      android:layout_height="match_parent"
       android:layout_marginTop="16dp"
       android:background="@drawable/shadows"
       android:elevation="4dp"
+      android:layout_above="@+id/keyboard"
       android:translationX="20dp" />
 
     <LinearLayout
       android:id="@+id/keyboard"
       android:layout_width="200dp"
       android:layout_height="124dp"
-      android:layout_gravity="bottom"
-      android:layout_marginBottom="10dp"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="20dp"
       android:background="@drawable/shadows"
       android:elevation="8dp"
       android:orientation="vertical"
@@ -128,5 +129,5 @@
         android:letterSpacing="0.7"
         android:text="ZXCVBNM" />
     </LinearLayout>
-  </FrameLayout>
+  </RelativeLayout>
 </RelativeLayout>
