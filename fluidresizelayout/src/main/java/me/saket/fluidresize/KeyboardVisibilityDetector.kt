@@ -5,60 +5,43 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 
-class KeyboardVisibilityDetector {
+object KeyboardVisibilityDetector {
 
-  fun KeyboardVisibilityDetector(activity: Activity, statusBarHeight: Int) {
+  fun listen(activity: Activity, listener: (KeyboardVisibilityChanged) -> Unit): Disposable {
     val rootResizableLayout = getWindowRootResizableLayout(activity)
     val rootNonResizableLayout = rootResizableLayout.parent as View
 
-    rootResizableLayout.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener {
+    val preDrawListener = object : ViewTreeObserver.OnGlobalLayoutListener {
       private var previousHeight: Int = -1
 
-      override fun onPreDraw(): Boolean {
+      override fun onGlobalLayout() {
         detect()
-        return true
       }
 
       private fun detect() {
-        val contentHeight = rootNonResizableLayout.height
-
+        val contentHeight = rootResizableLayout.height
         if (contentHeight == previousHeight) {
           return
         }
-        if (previousHeight == -1) {
-          return
-        }
 
-        rootResizableLayout.windowinsets
+        if (previousHeight != -1) {
+          val statusBarHeight = rootResizableLayout.top
+          val isKeyboardVisible = contentHeight < rootNonResizableLayout.height - statusBarHeight
+
+          listener(KeyboardVisibilityChanged(
+              visible = isKeyboardVisible,
+              contentHeight = contentHeight,
+              previousContentHeight = previousHeight))
+        }
 
         previousHeight = contentHeight
       }
-    })
+    }
+    rootResizableLayout.viewTreeObserver.addOnGlobalLayoutListener(preDrawListener)
 
-//    val subscriber = { emitter ->
-//      val layoutListener = {
-//        val activityContentHeight = rootResizableLayout.height
-//        if (activityContentHeight == activityContentHeightPrevious) {
-//          return
-//        }
-//
-//        if (activityContentHeightPrevious == -1) {
-//          activityContentHeightPrevious = rootNonResizableLayout.height - statusBarHeight
-//        }
-//
-//        val isKeyboardVisible = activityContentHeight < rootNonResizableLayout.height - statusBarHeight
-//        emitter.onNext(KeyboardVisibilityChangeEvent.create(isKeyboardVisible, activityContentHeightPrevious, activityContentHeight))
-//
-//        activityContentHeightPrevious = activityContentHeight
-//      }
-//      rootResizableLayout.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
-//      emitter.setCancellable({ rootResizableLayout.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener) })
-//      rootResizableLayout.post { layoutListener.onGlobalLayout() }      // Initial value.
-//    }
-//
-//    keyboardVisibilityChanges = Observable.create<KeyboardVisibilityChangeEvent>(subscriber)
-//        .distinctUntilChanged()
-//        .share()
+    return Disposable {
+      rootResizableLayout.viewTreeObserver.removeOnGlobalLayoutListener(preDrawListener)
+    }
   }
 
   /**

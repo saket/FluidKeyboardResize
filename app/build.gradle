@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+  implementation project(path: ':fluidresizelayout')
+
   implementation "androidx.appcompat:appcompat:$versions.androidx"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 
