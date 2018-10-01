@@ -1,0 +1,32 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$versions.dokka"
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.dokka-android'
+
+android {
+  compileSdkVersion versions.compileSdk
+  resourcePrefix "fr_"
+
+  defaultConfig {
+    minSdkVersion 21
+    targetSdkVersion versions.compileSdk
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+}
+
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+}

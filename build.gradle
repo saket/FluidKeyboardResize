@@ -14,6 +14,7 @@ buildscript {
       timber        : '4.7.0',
       kotlin        : '1.2.71',
       moshi         : '1.6.0',
+      dokka         : '0.9.17',
   ]
 
   repositories {

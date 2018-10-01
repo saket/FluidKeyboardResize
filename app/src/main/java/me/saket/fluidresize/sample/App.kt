@@ -1,4 +1,4 @@
-package me.saket.fluidresize
+package me.saket.fluidresize.sample
 
 import android.app.Application
 import timber.log.Timber
