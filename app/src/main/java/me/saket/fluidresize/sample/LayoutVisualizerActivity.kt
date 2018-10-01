@@ -4,14 +4,15 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Bundle
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import androidx.appcompat.app.AppCompatActivity
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.subjects.PublishSubject
+import kotterknife.bindView
 import me.saket.fluidresize.R
 
 @SuppressLint("CheckResult")

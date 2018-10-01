@@ -1,4 +1,4 @@
-package me.saket.fluidresize.sample
+package me.saket.fluidresize
 
 import android.app.Activity
 import android.view.View
