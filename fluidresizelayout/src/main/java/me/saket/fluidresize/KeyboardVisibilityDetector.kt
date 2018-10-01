@@ -1,23 +1,23 @@
 package me.saket.fluidresize
 
-import android.app.Activity
+import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 
 object KeyboardVisibilityDetector {
 
-  fun listen(activity: Activity, listener: (KeyboardVisibilityChanged) -> Unit) {
-    val viewHolder = findViews(activity)
-
+  fun listen(viewHolder: ActivityViewHolder, listener: (KeyboardVisibilityChanged) -> Unit) {
     val detector = Detector(viewHolder, listener)
     viewHolder.decorView.viewTreeObserver.addOnPreDrawListener(detector)
-    viewHolder.decorView.viewTreeObserver.addOnWindowAttachListener(detector)
+    viewHolder.onDetach {
+      viewHolder.decorView.viewTreeObserver.removeOnPreDrawListener(detector)
+    }
   }
 
   private class Detector(
       val viewHolder: ActivityViewHolder,
       val listener: (KeyboardVisibilityChanged) -> Unit
-  ) : ViewTreeObserver.OnWindowAttachListener, ViewTreeObserver.OnPreDrawListener {
+  ) : ViewTreeObserver.OnPreDrawListener {
 
     private var previousHeight: Int = -1
 
@@ -30,13 +30,13 @@ object KeyboardVisibilityDetector {
     }
 
     private fun detect(): Boolean {
-      val contentHeight = viewHolder.contentView.height
+      val contentHeight = viewHolder.contentViewFrame.height
       if (contentHeight == previousHeight) {
         return false
       }
 
       if (previousHeight != -1) {
-        val statusBarHeight = viewHolder.contentView.top
+        val statusBarHeight = viewHolder.contentViewFrame.top
         val isKeyboardVisible = contentHeight < viewHolder.decorView.height - statusBarHeight
 
         listener(KeyboardVisibilityChanged(
@@ -48,28 +48,22 @@ object KeyboardVisibilityDetector {
       previousHeight = contentHeight
       return true
     }
-
-    override fun onWindowDetached() {
-      viewHolder.decorView.viewTreeObserver.removeOnPreDrawListener(this)
-      viewHolder.decorView.viewTreeObserver.removeOnWindowAttachListener(this)
-    }
-
-    override fun onWindowAttached() {}
   }
+}
 
-  data class ActivityViewHolder(val decorView: ViewGroup, val contentView: ViewGroup)
+data class ActivityViewHolder(
+    val decorView: ViewGroup,
+    val contentViewFrame: ViewGroup,
+    val contentView: ViewGroup
+) {
 
-  /**
-   * TODO: can I directly find android.R.id.content?
-   *
-   * DecorView <- does not get resized and contains space for system Ui bars.
-   * - LinearLayout <- does not get resized and contains space for only the status bar.
-   * -- Activity content <- gets resized.
-   */
-  private fun findViews(activity: Activity): ActivityViewHolder {
-    val decorView = activity.window.decorView as ViewGroup
-    val decorViewChild = decorView.getChildAt(0) as ViewGroup
-    val contentView = decorViewChild.getChildAt(1) as ViewGroup
-    return ActivityViewHolder(decorView, contentView)
+  fun onDetach(onDetach: () -> Unit) {
+    decorView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+      override fun onViewDetachedFromWindow(v: View?) {
+        onDetach()
+      }
+
+      override fun onViewAttachedToWindow(v: View?) {}
+    })
   }
 }
