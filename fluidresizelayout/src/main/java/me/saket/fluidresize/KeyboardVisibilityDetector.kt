@@ -11,17 +11,21 @@ object KeyboardVisibilityDetector {
     val rootResizableLayout = getWindowRootResizableLayout(activity)
     val rootNonResizableLayout = rootResizableLayout.parent as View
 
-    val preDrawListener = object : ViewTreeObserver.OnGlobalLayoutListener {
+    val preDrawListener = object : ViewTreeObserver.OnPreDrawListener {
       private var previousHeight: Int = -1
 
-      override fun onGlobalLayout() {
-        detect()
+      override fun onPreDraw(): Boolean {
+        val detected = detect()
+
+        // The layout flickers for a moment, usually on the first
+        // animation. Intercepting this pre-draw seems to solve the problem.
+        return detected.not()
       }
 
-      private fun detect() {
+      private fun detect(): Boolean {
         val contentHeight = rootResizableLayout.height
         if (contentHeight == previousHeight) {
-          return
+          return false
         }
 
         if (previousHeight != -1) {
@@ -31,16 +35,17 @@ object KeyboardVisibilityDetector {
           listener(KeyboardVisibilityChanged(
               visible = isKeyboardVisible,
               contentHeight = contentHeight,
-              previousContentHeight = previousHeight))
+              contentHeightBeforeResize = previousHeight))
         }
 
         previousHeight = contentHeight
+        return true
       }
     }
-    rootResizableLayout.viewTreeObserver.addOnGlobalLayoutListener(preDrawListener)
+    rootResizableLayout.viewTreeObserver.addOnPreDrawListener(preDrawListener)
 
     return Disposable {
-      rootResizableLayout.viewTreeObserver.removeOnGlobalLayoutListener(preDrawListener)
+      rootResizableLayout.viewTreeObserver.removeOnPreDrawListener(preDrawListener)
     }
   }
 
