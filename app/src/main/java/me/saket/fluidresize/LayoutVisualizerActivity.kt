@@ -1,4 +1,4 @@
-package me.saket.baseandroidproject
+package me.saket.fluidresize
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
