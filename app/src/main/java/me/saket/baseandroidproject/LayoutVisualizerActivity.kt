@@ -15,7 +15,7 @@ import io.reactivex.subjects.PublishSubject
 import kotterknife.bindView
 
 @SuppressLint("CheckResult")
-class MainActivity : AppCompatActivity() {
+class LayoutVisualizerActivity : AppCompatActivity() {
 
   private val contentView by bindView<View>(R.id.contentview)
   private val keyboardView by bindView<View>(R.id.keyboard)
@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity() {
         .scan(false) { keyboardVisible, _ -> keyboardVisible.not() }
         .subscribe { show ->
           if (show) {
-            showKeyboard(smoothly = false)
+            showKeyboard(smoothly = true)
           } else {
-            hideKeyboard(smoothly = false)
+            hideKeyboard(smoothly = true)
           }
         }
   }

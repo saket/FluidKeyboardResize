@@ -3,7 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="me.saket.baseandroidproject.MainActivity"
+  tools:context="me.saket.baseandroidproject.LayoutVisualizerActivity"
   tools:ignore="HardcodedText">
 
   <TextView
@@ -74,7 +74,7 @@
 
     <View
       android:id="@+id/contentview"
-      android:layout_width="200dp"
+      android:layout_width="190dp"
       android:layout_height="match_parent"
       android:layout_marginBottom="128dp"
       android:layout_marginTop="16dp"
@@ -83,7 +83,7 @@
 
     <LinearLayout
       android:id="@+id/keyboard"
-      android:layout_width="200dp"
+      android:layout_width="190dp"
       android:layout_height="124dp"
       android:layout_alignParentBottom="true"
       android:layout_marginBottom="24dp"
@@ -100,7 +100,7 @@
         android:layout_weight="1"
         android:background="#FAFAFA"
         android:gravity="center"
-        android:letterSpacing="0.7"
+        android:letterSpacing="0.6"
         android:text="QWERTYUIOP" />
 
       <View
@@ -114,7 +114,7 @@
         android:layout_weight="1"
         android:background="#FAFAFA"
         android:gravity="center"
-        android:letterSpacing="0.7"
+        android:letterSpacing="0.6"
         android:text="ASDFGHJKL" />
 
       <View
@@ -128,7 +128,7 @@
         android:layout_weight="1"
         android:background="#FAFAFA"
         android:gravity="center"
-        android:letterSpacing="0.7"
+        android:letterSpacing="0.6"
         android:text="ZXCVBNM" />
     </LinearLayout>
   </RelativeLayout>
