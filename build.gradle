@@ -3,7 +3,7 @@
 buildscript {
   ext.versions = [
       minSdk        : 21,
-      compileSdk    : 27,
+      compileSdk    : 28,
       supportLib    : '27.1.1',
       rxBindings    : '2.1.0',
       timber        : '4.7.0',
