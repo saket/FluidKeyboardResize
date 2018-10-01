@@ -33,16 +33,8 @@ android {
 
 dependencies {
   implementation "com.android.support:appcompat-v7:$versions.supportLib"
-  implementation "com.android.support:recyclerview-v7:$versions.supportLib"
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 
-  implementation "com.google.dagger:dagger:$versions.dagger"
-  kapt "com.google.dagger:dagger-compiler:$versions.dagger"
-  implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
-  implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
-  implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
-  implementation 'com.squareup.moshi:moshi:1.5.0'
-  kapt "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
   implementation "com.jakewharton.timber:timber:$versions.timber"
   implementation('com.github.JakeWharton:kotterknife:e157638df1') {
     exclude group: 'com.android.support'
