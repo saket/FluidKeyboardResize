@@ -32,8 +32,8 @@ object FluidContentResizer {
 
     // Warning: animating height might not be very performant. Try turning on
     // "Profile GPI rendering" in developer options and check if the bars stay
-    // under 16ms. Using Transitions API would be more efficient, but for some
-    // reason it skips the first animation and I cannot figure out why.
+    // under 16ms in your app. Using Transitions API would be more efficient, but
+    // for some reason it skips the first animation and I cannot figure out why.
     heightAnimator = ObjectAnimator.ofInt(event.contentHeightBeforeResize, event.contentHeight).apply {
       interpolator = FastOutSlowInInterpolator()
       duration = 300
