@@ -15,9 +15,10 @@ data class ActivityViewHolder(
 
     /**
      * DecorView <- does not get resized, contains space for system Ui bars.
-     * - LinearLayout <- does not get resized, contains space for action mode.
-     * -- FrameLayout <- gets resized, contains space for action bar.
-     * --- Activity content <- gets resized.
+     * - LinearLayout
+     * -- FrameLayout <- gets resized
+     * --- LinearLayout
+     * ---- Activity content
      */
     fun createFrom(activity: Activity): ActivityViewHolder {
       val decorView = activity.window.decorView as ViewGroup
