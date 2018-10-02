@@ -1,1 +1,1 @@
-include ':app', ':fluidresizelayout'
+include ':sample', ':fluidresizelayout'

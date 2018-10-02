@@ -19,7 +19,6 @@ object FluidContentResizer {
     KeyboardVisibilityDetector.listen(viewHolder) {
       animateHeight(viewHolder, it)
     }
-
     viewHolder.onDetach {
       heightAnimator.cancel()
     }
@@ -32,7 +31,7 @@ object FluidContentResizer {
     heightAnimator.cancel()
 
     // Warning: animating height might not be very performant. Try turning on
-    // "Profile GPI rendering" from developer options and check if the bars stay
+    // "Profile GPI rendering" in developer options and check if the bars stay
     // under 16ms. Using Transitions API would be more efficient, but for some
     // reason it skips the first animation and I cannot figure out why.
     heightAnimator = ObjectAnimator.ofInt(event.contentHeightBeforeResize, event.contentHeight).apply {
