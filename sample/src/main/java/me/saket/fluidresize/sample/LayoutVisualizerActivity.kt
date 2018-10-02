@@ -47,7 +47,6 @@ class LayoutVisualizerActivity : AppCompatActivity() {
     super.onDestroy()
   }
 
-
   private fun showKeyboard(smoothly: Boolean = true) {
     val params = contentView.layoutParams as ViewGroup.MarginLayoutParams
     if (smoothly) {

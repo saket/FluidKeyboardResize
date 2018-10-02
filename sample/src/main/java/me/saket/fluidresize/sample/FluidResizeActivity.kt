@@ -2,7 +2,6 @@ package me.saket.fluidresize.sample
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import me.saket.fluidresize.FluidContentResizer
 import me.saket.fluidresize.R
 
 class FluidResizeActivity : AppCompatActivity() {
