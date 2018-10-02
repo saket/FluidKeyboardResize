@@ -30,6 +30,4 @@ android {
 
 dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
-  implementation "androidx.appcompat:appcompat:$versions.androidx"
-  implementation "androidx.transition:transition:$versions.androidx"
 }

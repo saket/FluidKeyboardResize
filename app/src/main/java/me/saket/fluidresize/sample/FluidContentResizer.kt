@@ -1,10 +1,13 @@
-package me.saket.fluidresize
+package me.saket.fluidresize.sample
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.view.View
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import me.saket.fluidresize.ActivityViewHolder
+import me.saket.fluidresize.KeyboardVisibilityChanged
+import me.saket.fluidresize.KeyboardVisibilityDetector
 
 object FluidContentResizer {
 
