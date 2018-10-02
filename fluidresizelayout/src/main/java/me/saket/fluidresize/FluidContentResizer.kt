@@ -4,8 +4,6 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 
 object FluidContentResizer {
@@ -13,7 +11,7 @@ object FluidContentResizer {
   private var heightAnimator: ValueAnimator = ObjectAnimator()
 
   fun listen(activity: Activity) {
-    val viewHolder = findViews(activity)
+    val viewHolder = ActivityViewHolder.createFrom(activity)
 
     KeyboardVisibilityDetector.listen(viewHolder) {
       animateHeight(viewHolder, it)
@@ -30,6 +28,10 @@ object FluidContentResizer {
 
     heightAnimator.cancel()
 
+    // Warning: animating height might not be very performant. Try turning on
+    // "Profile GPI rendering" from developer options and check if the bars stay
+    // under 16ms. Using Transitions API would be more efficient, but for some
+    // reason it skips the first animation and I cannot figure out why.
     heightAnimator = ObjectAnimator.ofInt(event.contentHeightBeforeResize, event.contentHeight).apply {
       interpolator = FastOutSlowInInterpolator()
       duration = 300
@@ -42,23 +44,5 @@ object FluidContentResizer {
     val params = layoutParams
     params.height = height
     layoutParams = params
-  }
-
-  /**
-   * DecorView <- does not get resized, contains space for system Ui bars.
-   * - LinearLayout <- does not get resized, contains space for action mode.
-   * -- FrameLayout <- gets resized, contains space for action bar.
-   * --- Activity content <- gets resized.
-   */
-  private fun findViews(activity: Activity): ActivityViewHolder {
-    val decorView = activity.window.decorView as ViewGroup
-    val decorViewChild = decorView.getChildAt(0) as ViewGroup
-    val contentViewFrame = decorViewChild.getChildAt(1) as ViewGroup
-    val contentView = decorView.findViewById<ViewGroup>(Window.ID_ANDROID_CONTENT)
-
-    return ActivityViewHolder(
-        decorView = decorView,
-        contentViewFrame = contentViewFrame,
-        contentView = contentView)
   }
 }
