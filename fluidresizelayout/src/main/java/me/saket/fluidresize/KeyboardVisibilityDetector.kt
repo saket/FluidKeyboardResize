@@ -6,9 +6,9 @@ object KeyboardVisibilityDetector {
 
   fun listen(viewHolder: ActivityViewHolder, listener: (KeyboardVisibilityChanged) -> Unit) {
     val detector = Detector(viewHolder, listener)
-    viewHolder.decorView.viewTreeObserver.addOnPreDrawListener(detector)
+    viewHolder.nonResizableLayout.viewTreeObserver.addOnPreDrawListener(detector)
     viewHolder.onDetach {
-      viewHolder.decorView.viewTreeObserver.removeOnPreDrawListener(detector)
+      viewHolder.nonResizableLayout.viewTreeObserver.removeOnPreDrawListener(detector)
     }
   }
 
@@ -28,14 +28,14 @@ object KeyboardVisibilityDetector {
     }
 
     private fun detect(): Boolean {
-      val contentHeight = viewHolder.contentViewFrame.height
+      val contentHeight = viewHolder.resizableLayout.height
       if (contentHeight == previousHeight) {
         return false
       }
 
       if (previousHeight != -1) {
-        val statusBarHeight = viewHolder.contentViewFrame.top
-        val isKeyboardVisible = contentHeight < viewHolder.decorView.height - statusBarHeight
+        val statusBarHeight = viewHolder.resizableLayout.top
+        val isKeyboardVisible = contentHeight < viewHolder.nonResizableLayout.height - statusBarHeight
 
         listener(KeyboardVisibilityChanged(
             visible = isKeyboardVisible,

@@ -6,14 +6,16 @@ import android.view.ViewGroup
 import android.view.Window
 
 data class ActivityViewHolder(
-    val decorView: ViewGroup,
-    val contentViewFrame: ViewGroup,
+    val nonResizableLayout: ViewGroup,
+    val resizableLayout: ViewGroup,
     val contentView: ViewGroup
 ) {
 
   companion object {
 
     /**
+     * The Activity View tree usually looks like this:
+     *
      * DecorView <- does not get resized, contains space for system Ui bars.
      * - LinearLayout
      * -- FrameLayout <- gets resized
@@ -22,19 +24,19 @@ data class ActivityViewHolder(
      */
     fun createFrom(activity: Activity): ActivityViewHolder {
       val decorView = activity.window.decorView as ViewGroup
-      val decorViewChild = decorView.getChildAt(0) as ViewGroup
-      val contentViewFrame = decorViewChild.getChildAt(1) as ViewGroup
       val contentView = decorView.findViewById<ViewGroup>(Window.ID_ANDROID_CONTENT)
+      val actionBarRootLayout = contentView.parent as ViewGroup
+      val resizableLayout = actionBarRootLayout.parent as ViewGroup
 
       return ActivityViewHolder(
-          decorView = decorView,
-          contentViewFrame = contentViewFrame,
+          nonResizableLayout = decorView,
+          resizableLayout = resizableLayout,
           contentView = contentView)
     }
   }
 
   fun onDetach(onDetach: () -> Unit) {
-    decorView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+    nonResizableLayout.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
       override fun onViewDetachedFromWindow(v: View?) {
         onDetach()
       }
