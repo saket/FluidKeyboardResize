@@ -3,14 +3,11 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$versions.dokka"
+
   }
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'org.jetbrains.dokka-android'
 
 android {
   compileSdkVersion versions.compileSdk
@@ -26,8 +23,13 @@ android {
       minifyEnabled false
     }
   }
+
+  compileOptions {
+    targetCompatibility 1.8
+    sourceCompatibility 1.8
+  }
 }
 
 dependencies {
-  implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+  implementation "com.android.support:interpolator:$versions.support"
 }
