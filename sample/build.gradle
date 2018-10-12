@@ -33,7 +33,7 @@ dependencies {
   implementation project(path: ':fluidresizelayout')
 
   implementation "androidx.appcompat:appcompat:$versions.androidx"
-  implementation "com.android.support:interpolator:28.0.0"
+  implementation "com.android.support:interpolator:$versions.support"
 
   implementation "com.jakewharton.timber:timber:$versions.timber"
 
