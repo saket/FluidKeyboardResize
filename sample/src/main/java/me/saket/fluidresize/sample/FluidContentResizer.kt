@@ -1,17 +1,14 @@
 package me.saket.fluidresize.sample
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.app.Activity
+import android.transition.*
 import android.view.View
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import android.view.ViewGroup
 import me.saket.fluidresize.ActivityViewHolder
 import me.saket.fluidresize.KeyboardVisibilityChanged
 import me.saket.fluidresize.KeyboardVisibilityDetector
 
 object FluidContentResizer {
-
-  private var heightAnimator: ValueAnimator = ObjectAnimator()
 
   fun listen(activity: Activity) {
     val viewHolder = ActivityViewHolder.createFrom(activity)
@@ -20,7 +17,12 @@ object FluidContentResizer {
       animateHeight(viewHolder, it)
     }
     viewHolder.onDetach {
-      heightAnimator.cancel()
+      viewHolder.contentView.clearAnimation()
+    }
+    viewHolder.contentView.apply {
+      post {
+        setHeight(viewHolder.resizableLayout.height)
+      }
     }
   }
 
@@ -28,18 +30,11 @@ object FluidContentResizer {
     val contentView = viewHolder.contentView
     contentView.setHeight(event.contentHeightBeforeResize)
 
-    heightAnimator.cancel()
+    val transition = ChangeBounds()
+    val sceneRoot = contentView.parent as ViewGroup
+    TransitionManager.beginDelayedTransition(sceneRoot, transition)
 
-    // Warning: animating height might not be very performant. Try turning on
-    // "Profile GPI rendering" in developer options and check if the bars stay
-    // under 16ms in your app. Using Transitions API would be more efficient, but
-    // for some reason it skips the first animation and I cannot figure out why.
-    heightAnimator = ObjectAnimator.ofInt(event.contentHeightBeforeResize, event.contentHeight).apply {
-      interpolator = FastOutSlowInInterpolator()
-      duration = 300
-    }
-    heightAnimator.addUpdateListener { contentView.setHeight(it.animatedValue as Int) }
-    heightAnimator.start()
+    contentView.setHeight(event.contentHeight)
   }
 
   private fun View.setHeight(height: Int) {
