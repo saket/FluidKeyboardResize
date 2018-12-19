@@ -21,6 +21,7 @@ object FluidContentResizer {
     }
     viewHolder.onDetach {
       heightAnimator.cancel()
+      heightAnimator.removeAllUpdateListeners()
     }
   }
 
