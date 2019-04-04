@@ -35,7 +35,7 @@ dependencies {
   implementation project(path: ':fluidresizelayout')
 
   implementation "androidx.appcompat:appcompat:$versions.androidx"
-  implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+  implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha3"
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 
