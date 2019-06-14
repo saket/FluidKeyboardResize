@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="me.saket.fluidresize"
+<manifest package="me.saket.fluidresize.sample"
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools">
 
@@ -14,7 +14,7 @@
     tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
     <activity
-      android:name=".sample.FluidResizeActivity"
+      android:name=".FluidResizeActivity"
       android:windowSoftInputMode="adjustResize">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
     </activity>
 
     <activity
-      android:name=".sample.LayoutVisualizerActivity"
+      android:name=".LayoutVisualizerActivity"
       android:label="Layout Visualizer">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

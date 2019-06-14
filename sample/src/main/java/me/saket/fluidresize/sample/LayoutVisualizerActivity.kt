@@ -13,7 +13,6 @@ import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.subjects.PublishSubject
 import kotterknife.bindView
-import me.saket.fluidresize.R
 
 @SuppressLint("CheckResult")
 class LayoutVisualizerActivity : AppCompatActivity() {
