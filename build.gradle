@@ -2,7 +2,7 @@
 
 buildscript {
   ext.versions = [
-      minSdk    : 21,
+      minSdk    : 23,
       compileSdk: 28,
       androidx  : '1.0.0',
       rxBindings: '2.1.0',
